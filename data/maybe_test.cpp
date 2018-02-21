@@ -67,4 +67,33 @@ SCENARIO("fun::data::array")
             }
         }
     }
+
+    GIVEN("a valid maybe<int>")
+    {
+        constexpr auto one = maybe{ 1 };
+
+        WHEN("chaining unsuccessful computations")
+        {
+            auto f = [](auto x) {
+                return maybe{ 2 * x };
+            };
+
+            auto g = [](auto x) {
+                return maybe<decltype(x)>{};
+            };
+
+            auto computation = bind(one)([f, g](auto x) {
+                return bind(f(x))([f, g](auto&& x) {
+                    return bind(g(x))([f, g](auto&& x) {
+                        return maybe{ x };
+                    });
+                });
+            });
+
+            THEN("an invalid maybe should be returned")
+            {
+                CHECK(!computation);
+            }
+        }
+    }
 }
