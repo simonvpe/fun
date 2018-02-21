@@ -12,3 +12,11 @@ target_link_libraries(array_test
   doctest
   fun.data)
 add_test(NAME fun_array_test COMMAND array_test)
+
+add_executable(maybe_test
+  ${CMAKE_CURRENT_SOURCE_DIR}/maybe_test.cpp)
+target_link_libraries(maybe_test
+  doctest
+  fun.data)
+add_test(NAME fun_maybe_test COMMAND maybe_test)
+
