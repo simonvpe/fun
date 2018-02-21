@@ -26,11 +26,6 @@ public:
         return maybe<T>{ *this };
     }
 
-    constexpr auto ret(T&& value) const
-    {
-        return maybe<T>{ std::forward<T>(value) };
-    }
-
     constexpr maybe<T> map(auto&& f) const
     {
         if (valid)

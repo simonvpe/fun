@@ -30,7 +30,7 @@ constexpr auto id = [](auto&& a) -> decltype(a) {
 constexpr auto fmap(auto&& f)
 {
     return [=](Monad&& a) {
-        return bind(a)([=](auto x) { return a.ret(f(x)); });
+        return bind(a)([=](auto x) { return decltype(a){ f(x) }; });
     };
 };
 
