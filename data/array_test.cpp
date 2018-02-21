@@ -3,8 +3,8 @@
 #include "doctest.h"
 
 using fun::data::array;
-using fun::data::fmap;
 using fun::data::make_array;
+using fun::data::map;
 
 SCENARIO("fun::data::array") {
 
@@ -28,7 +28,7 @@ SCENARIO("fun::data::array") {
   GIVEN("an array created with make_array") {
     constexpr auto data = make_array(1, 2, 3);
     WHEN("mapping a function over the array") {
-      constexpr auto fdouble = fmap([](auto x) { return 2 * x; });
+      constexpr auto fdouble = map([](auto x) { return 2 * x; });
       constexpr auto result = fdouble(data);
       THEN("the first value should be correct") { CHECK(result[0] == 2); }
       THEN("the last value should be correct") { CHECK(result[2] == 6); }
@@ -39,7 +39,7 @@ SCENARIO("fun::data::array") {
     constexpr auto data = make_array(1, 2, 3);
     WHEN("mapping a function over the array") {
       constexpr auto ftriplet =
-          fmap([](auto x) { return make_array(x, x + 1, x + 2); });
+          map([](auto x) { return make_array(x, x + 1, x + 2); });
       constexpr auto result = ftriplet(data);
       THEN("the first value should be correct") {
         CHECK(result[0][0] == 1);

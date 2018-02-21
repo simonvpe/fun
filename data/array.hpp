@@ -25,7 +25,7 @@ public:
     return array<T, N + S>{r};
   }
 
-  constexpr auto fmap(auto &&f) const {
+  constexpr auto map(auto &&f) const {
     using R = decltype(f(T{}));
     auto r = std::array<R, N>{};
     auto dest = std::begin(r);

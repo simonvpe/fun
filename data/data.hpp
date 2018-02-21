@@ -2,8 +2,8 @@
 
 namespace fun::data {
 
-constexpr auto fmap(auto &&f) {
-  return [=](Functor &&a) -> Functor { return a.fmap(f); };
+constexpr auto map(auto &&f) {
+  return [=](Functor &&a) -> Functor { return a.map(f); };
 }
 
 constexpr auto apply(Applicative &&f) -> Applicative {
