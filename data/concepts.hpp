@@ -39,4 +39,13 @@ concept bool Monad = requires(T t)
     true;
 };
 
+template <typename T>
+concept bool is_lfoldable = requires(T t)
+{
+    {
+        t.lfold(int{}, monoid)
+    }
+    ->int;
+};
+
 } // namespace fun::data

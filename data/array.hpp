@@ -64,6 +64,26 @@ public:
         return array<R, N>{ r };
     }
 
+    constexpr auto bind(auto&& f) const
+    {
+        return map(f).concat();
+    }
+
+    constexpr auto concat() const
+    {
+        if constexpr (is_lfoldable<T>) {
+        }
+    }
+
+    constexpr auto lfold(auto z, auto&& f) const
+    {
+        if constexpr (N >= 1) {
+            const auto acc = f(z, head());
+            return tail().lfold(acc, f);
+        }
+        return z;
+    }
+
     constexpr T operator[](int i) const { return payload[i]; }
 
 private:

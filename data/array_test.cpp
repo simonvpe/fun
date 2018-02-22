@@ -100,4 +100,40 @@ SCENARIO("fun::data::array")
             CHECK(tail[1] == 3);
         }
     }
+
+    GIVEN("a non empty int array")
+    {
+        constexpr auto data = make_array(1, 2, 3);
+        WHEN("lfolding, summing the elements")
+        {
+            constexpr auto result = data.lfold(0, [](auto acc, auto x) { return acc + x; });
+            CHECK(result == 6);
+        }
+    }
+
+    GIVEN("an empty int array")
+    {
+        constexpr auto data = array<int, 0>{};
+        WHEN("lfolding, summing the elements")
+        {
+            constexpr auto result = data.lfold(0, [](auto acc, auto x) { return acc + x; });
+            CHECK(result == 0);
+        }
+    }
+    /*
+    GIVEN("a non empty array<array<int>>")
+    {
+        constexpr auto data = make_array(
+            make_array(1, 2, 3),
+            make_array(4, 5, 6),
+            make_array(7, 8, 9));
+
+        WHEN("lfolding, summing the elements")
+        {
+            constexpr auto empty = array<int, 0>{};
+            constexpr auto result = data.lfold(empty, [](auto acc, auto x) { return acc + x; });
+            CHECK(result == 6);
+        }
+    }
+    */
 }
