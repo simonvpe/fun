@@ -3,14 +3,20 @@
 #include "concepts.hpp"
 #include <array>
 #include <experimental/type_traits>
+#include <tuple>
 
 namespace fun::data {
+
+template <typename A, size_t... Is>
+constexpr auto as_tuple(const A& arr, std::index_sequence<Is...>)
+{
+    return std::make_tuple(arr[Is]...);
+}
 
 template <typename T, int N>
 class array final {
 public:
     using value_type = T;
-    static constexpr int size = N;
 
     constexpr array()
         : payload{}
@@ -71,17 +77,20 @@ public:
 
     constexpr auto concat() const
     {
-        if constexpr (is_lfoldable<T>) {
-        }
+        return lfold(array<T, 0>{}, [](auto acc, auto x) { return acc + x; });
     }
 
     constexpr auto lfold(auto z, auto&& f) const
     {
-        if constexpr (N >= 1) {
-            const auto acc = f(z, head());
-            return tail().lfold(acc, f);
-        }
-        return z;
+        static_assert(N > 0, "Empty array");
+        const auto t = as_tuple(*this, std::make_index_sequence<N>{});
+        return std::apply([](auto&&... xs) { return (... + xs); }, t);
+    }
+
+    auto
+    size() const
+    {
+        return N;
     }
 
     constexpr T operator[](int i) const { return payload[i]; }
