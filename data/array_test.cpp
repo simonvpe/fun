@@ -119,7 +119,7 @@ SCENARIO("fun::data::array")
             make_array(4, 5, 6),
             make_array(7, 8, 9));
 
-        WHEN("lfolding, summing the elements")
+        WHEN("lfolding, concatenating the elements")
         {
             constexpr auto empty = array<int, 0>{};
             constexpr auto result = data.lfold(empty, [](auto acc, auto x) { return acc + x; });
@@ -152,5 +152,17 @@ SCENARIO("fun::data::array")
                 CHECK(result[8] == 9);
             }
         }
+    }
+
+    GIVEN("a non empty array<int>")
+    {
+        constexpr auto data = make_array(1, 2, 3);
+        constexpr auto result = data.bind([](auto) {
+            return make_array(4, 5, 6);
+        });
+        CHECK(result.size() == 9);
+        CHECK(result[0] == 4);
+        CHECK(result[3] == 4);
+        CHECK(result[8] == 6);
     }
 }

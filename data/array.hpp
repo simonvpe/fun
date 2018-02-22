@@ -87,8 +87,7 @@ public:
         return std::apply([](auto&&... xs) { return (... + xs); }, t);
     }
 
-    auto
-    size() const
+    constexpr auto size() const
     {
         return N;
     }
