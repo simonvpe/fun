@@ -1,4 +1,5 @@
 #include "array.hpp"
+#include "either.hpp"
 #include "maybe.hpp"
 
 namespace fun::data {

@@ -21,11 +21,6 @@ public:
     {
     }
 
-    constexpr auto id() const
-    {
-        return maybe<T>{ *this };
-    }
-
     constexpr maybe<T> map(auto&& f) const
     {
         if (valid)

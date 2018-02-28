@@ -6,17 +6,12 @@ set_target_properties(fun.data PROPERTIES
   INTERFACE_COMPILE_FEATURES cxx_std_17
   INTERFACE_COMPILE_OPTIONS "-fconcepts")
 
-add_executable(array_test
-  ${CMAKE_CURRENT_SOURCE_DIR}/array_test.cpp)
-target_link_libraries(array_test
-  doctest
-  fun.data)
-add_test(NAME fun_array_test COMMAND array_test)
+function(fun_add_test name source)
+  add_executable(${name} ${source})
+  target_link_libraries(${name} doctest fun.data)
+  add_test(NAME fun_${name} COMMAND ${name})
+endfunction()
 
-add_executable(maybe_test
-  ${CMAKE_CURRENT_SOURCE_DIR}/maybe_test.cpp)
-target_link_libraries(maybe_test
-  doctest
-  fun.data)
-add_test(NAME fun_maybe_test COMMAND maybe_test)
-
+fun_add_test(array_test ${CMAKE_CURRENT_SOURCE_DIR}/array_test.cpp)
+fun_add_test(maybe_test ${CMAKE_CURRENT_SOURCE_DIR}/maybe_test.cpp)
+fun_add_test(either_test ${CMAKE_CURRENT_SOURCE_DIR}/either_test.cpp)
